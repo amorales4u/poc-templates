@@ -21,6 +21,10 @@ class MiniJinja {
         
         while( startIdx != -1 ) {
             int endIdx = template.indexOf(closeKey) 
+            if (endIdx == -1) {
+                break
+            }
+
             String varName = template.substring( startIdx + openKeySize, endIdx - ( closeKeySize - 1 ) )
             varName = varName.trim()
             /*
@@ -30,7 +34,7 @@ class MiniJinja {
             println "[" + template.substring( endIdx + keySize ) + "]"
             */
             def functionName = null
-            if( varName.indexOf("|") != -1 ) {
+            if( varName.contains("|") != -1 ) {
                 def varAndFunction = varName.split("\\|")
                 //println varAndFunction
                 varName = varAndFunction[0].trim()
