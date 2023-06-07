@@ -7,6 +7,7 @@
 
 import groovy.text.GStringTemplateEngine
 import com.google.common.base.CaseFormat
+import groovy.io.FileType
 
 class Main {
 
@@ -18,8 +19,6 @@ class Main {
         
         def template = new Main()
         template.template()
-
-
 
     }
     
@@ -62,9 +61,23 @@ class Main {
         println miniJinja.render( " Custom expression: {{ projectName + ' Hola mundo' }} ")
         println miniJinja.render( " Port: {{ serverPort }} ")
         println miniJinja.render( " Port: {{ serverPort + 1 }} ")
+
+        def sourcePath = "/dev/commons-events/arch-back-java-archetype-spring-boot-service-grpc-broker-events/layouts_base"
+        def listFiles = []    
+        def dir = new File(sourcePath)
+        dir.eachFileRecurse (FileType.FILES) { file ->
+            println file.getCanonicalPath() - dir.getCanonicalPath()
+            listFiles << file.getCanonicalPath() - dir.getCanonicalPath()
+        }
+
+        println dir.getCanonicalPath()
+
+        def username = System.console().readLine 'What is your name? '
+        println "Hello $username"
         
     
     }
 
+ 
 
 }
