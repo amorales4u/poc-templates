@@ -35,6 +35,19 @@ class Main {
     void template() {
         binding << [ "ProjectName": "Employee" ]
         binding << [ "projectName": "employee" ]
+        binding << [ "ProjectPrefix": "Employee" ]
+        binding << [ "projectPrefix": "employee" ]
+        binding << [ "ProjectSuffix": "Service" ]
+        binding << [ "projectSuffix": "service" ]
+        binding << [ "artifact-id": "employee-service" ]
+        binding << [ "artifact_id": "employee_service" ]
+        binding << [ "ARTIFACT-ID": "EMPLOYEE-SERVICE" ]
+        binding << [ "ARTIFACT_ID": "EMPLOYEE_SERVICE" ]
+        binding << [ "root_directory": "com/palo/it/employee/service" ]
+        binding << [ "root_package": "com.palo.it.employee.service"]
+        binding << [ "group-id": "com.carfif.bra.purchase-service" ]
+        binding << [ "eventModule": null ]
+        
         binding << [ "com.main.package.name": '''com.palo.it.employee''']
         binding << [ "serverPort": 9010 ]
         binding << [ "_": this ]
@@ -62,12 +75,18 @@ class Main {
         println miniJinja.render( " Port: {{ serverPort }} ")
         println miniJinja.render( " Port: {{ serverPort + 1 }} ")
 
-        def sourcePath = "/dev/commons-events/arch-back-java-archetype-spring-boot-service-grpc-broker-events/layouts_base"
+        def sourcePath = "/dev/projects/poc-template/layouts/layouts_base"
+        def targetPath = "/dev/test-impl/from-template"
         def listFiles = []    
         def dir = new File(sourcePath)
         dir.eachFileRecurse (FileType.FILES) { file ->
-            println file.getCanonicalPath() - dir.getCanonicalPath()
+            //println file.getCanonicalPath() - dir.getCanonicalPath()
             listFiles << file.getCanonicalPath() - dir.getCanonicalPath()
+        }
+
+        def templetedFile = new TempletedFile()
+        listFiles.each {
+            templetedFile.createFile( binding, sourcePath, targetPath, it )
         }
 
         println dir.getCanonicalPath()
