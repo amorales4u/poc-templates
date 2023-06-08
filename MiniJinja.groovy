@@ -34,7 +34,7 @@ class MiniJinja {
             println "[" + template.substring( endIdx + keySize ) + "]"
             */
             def functionName = null
-            if( varName.contains("|") != -1 ) {
+            if( varName.contains("|")  ) {
                 def varAndFunction = varName.split("\\|")
                 //println varAndFunction
                 varName = varAndFunction[0].trim()
